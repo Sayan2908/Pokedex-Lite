@@ -4,10 +4,32 @@ import { useFavorites } from "@/context/FavoritesContext";
 interface PokemonCardProps {
   name: string;
   url: string;
+  types: string[];
   onCardClick?: (id: number) => void; // Callback for when user clicks the card
 }
 
-export default function PokemonCard({ name, url, onCardClick }: PokemonCardProps) {
+const typeColors: { [key: string]: string } = {
+  fire: "bg-orange-500 text-white",
+  water: "bg-blue-500 text-white",
+  grass: "bg-green-500 text-white",
+  electric: "bg-yellow-500 text-black",
+  ground: "bg-yellow-800 text-white",
+  rock: "bg-gray-500 text-white",
+  fairy: "bg-pink-500 text-white",
+  psychic: "bg-purple-500 text-white",
+  fighting: "bg-red-700 text-white",
+  normal: "bg-gray-300 text-black",
+  flying: "bg-indigo-300 text-black",
+  poison: "bg-purple-800 text-white",
+  bug: "bg-green-300 text-black",
+  ice: "bg-cyan-500 text-black",
+  ghost: "bg-indigo-700 text-white",
+  dragon: "bg-purple-700 text-white",
+  dark: "bg-gray-800 text-white",
+  steel: "bg-gray-400 text-black",
+};
+
+export default function PokemonCard({ name, url, types, onCardClick }: PokemonCardProps) {
   // Extract Pokémon ID
   const getPokemonId = (url: string) => {
     const segments = url.split("/").filter(Boolean);
@@ -29,24 +51,48 @@ export default function PokemonCard({ name, url, onCardClick }: PokemonCardProps
   };
 
   return (
-    <div className="relative w-full">
-      {/* The card itself: we use onClick to open modal */}
-      <div
-        onClick={handleCardClick}
-        className="flex cursor-pointer flex-col items-center justify-center rounded-lg border bg-white p-4 shadow hover:shadow-md"
-      >
-        <img src={imageUrl} alt={name} className="h-24 w-24 object-contain" loading="lazy" />
-        <p className="mt-2 capitalize">{name}</p>
+    <div
+      onClick={handleCardClick}
+      className="relative flex cursor-pointer flex-col items-center justify-center rounded-lg bg-gradient-to-b from-indigo-100 to-white p-4 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+    >
+      {/* Pokémon Image */}
+      <div className="relative mb-2 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-white shadow-inner">
+        <img
+          src={imageUrl}
+          alt={name}
+          className="h-full w-full object-contain"
+          loading="lazy"
+        />
       </div>
 
-      {/* Favorite icon in top-right corner */}
+      {/* Type Badges */}
+      <div className="mt-2 flex flex-wrap justify-center gap-2">
+        {types.map((type) => (
+          <span
+            key={type}
+            className={`rounded-full px-3 py-1 text-sm font-medium ${typeColors[type.toLowerCase()] || "bg-gray-200 text-black"}`}
+          >
+            {type}
+          </span>
+        ))}
+      </div>;
+
+      {/* Pokémon Name */}
+      <p className="mt-2 text-lg font-semibold capitalize text-gray-800">
+        {name}
+      </p>
+
+      {/* Pokémon ID */}
+      <p className="text-sm font-medium text-gray-500">#{pokemonId}</p>
+
+      {/* Favorite Icon */}
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation(); // Prevent card click
           toggleFavorite(pokemonId);
         }}
-        className="absolute right-2 top-2 z-10"
+        className="absolute right-2 top-2 z-10 p-1"
         aria-label="Toggle Favorite"
       >
         {isFavorite ? (

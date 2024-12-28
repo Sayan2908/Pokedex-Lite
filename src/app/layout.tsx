@@ -33,25 +33,21 @@ export default function RootLayout({
       >
         {/* 2) Wrap everything inside FavoritesProvider so the context is available everywhere */}
         <FavoritesProvider>
-          {/* Simple Header */}
-          <header className="flex items-center justify-between bg-white p-4 shadow">
-            <Link href="/">
-              <span className="text-xl font-bold">Pokedex Lite</span>
-            </Link>
-            <nav className="space-x-4">
-              <Link href="/pokedex" className="text-blue-600 hover:underline">
-                Pokedex
+          {/* Dark Themed Header */}
+          <header className="bg-gray-800 shadow-lg">
+            <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
+              {/* Logo */}
+              <Link href="/">
+                <span className="text-2xl font-bold text-white">Pokedex Lite</span>
               </Link>
-              <Link href="/favourites" className="text-blue-600 hover:underline">
-                Favourites
-              </Link>
-              {/* If you want a link to the login page, uncomment below: */}
-              {/* 
-                <Link href="/login" className="text-blue-600 hover:underline">
-                  Login
-                </Link>
-              */}
-            </nav>
+              {/* Navigation */}
+              <nav className="flex space-x-4">
+                <NavLink href="/pokedex">Pokedex</NavLink>
+                <NavLink href="/favourites">Favourites</NavLink>
+                {/* If you want a link to the login page, uncomment below: */}
+                {/* <NavLink href="/login">Login</NavLink> */}
+              </nav>
+            </div>
           </header>
 
           {/* Main Content */}
@@ -59,5 +55,17 @@ export default function RootLayout({
         </FavoritesProvider>
       </body>
     </html>
+  );
+}
+
+// Reusable NavLink component
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="relative rounded-md px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+    >
+      {children}
+    </Link>
   );
 }

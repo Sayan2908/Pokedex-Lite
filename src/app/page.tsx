@@ -1,100 +1,145 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const { scrollY } = useScroll();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Create parallax effects
+  const ashParallax = useTransform(scrollY, [0, 500], [0, 100]);
+  const leagueParallax = useTransform(scrollY, [200, 800], [0, 200]);
+
+  return (
+    <div className="min-h-screen overflow-hidden bg-gray-900 text-white">
+      {/* Header Section */}
+      <section className="relative h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-gray-800 to-gray-900">
+        <motion.div
+          style={{ y: ashParallax }}
+          className="absolute top-0 w-full h-full -z-10"
+        >
+          <Image
+            src="/ash-ketchum.png"
+            alt="Ash Ketchum"
+            layout="fill"
+            objectFit="cover"
+            priority
+          />
+        </motion.div>
+
+        <h1 className="text-5xl font-bold mb-4">Welcome to the Pokémon World</h1>
+        <p className="text-xl max-w-3xl">
+          Dive into the incredible journey of Ash Ketchum, explore the leagues, and relive
+          your favorite moments from the Pokémon series!
+        </p>
+      </section>
+
+      {/* History Section */}
+      <section className="px-8 py-20 bg-gray-800">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h2 className="text-4xl font-bold mb-6">A Brief History of Pokémon</h2>
+          <p className="text-lg leading-relaxed">
+            Pokémon started as a video game series in 1996 and quickly grew into a global
+            phenomenon, spanning anime, movies, trading cards, and more. Follow Ash
+            Ketchum's dream to become a Pokémon Master as he travels through various
+            regions, participating in leagues and making friends along the way.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Leagues Section */}
+      <section className="relative py-20">
+        <motion.div
+          style={{ y: leagueParallax }}
+          className="absolute inset-0 -z-10"
+        >
+          <Image
+            src="/pokemon-leagues-bg.jpg"
+            alt="Pokémon Leagues Background"
+            layout="fill"
+            objectFit="cover"
+            priority
+          />
+        </motion.div>
+
+        <div className="max-w-6xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center mb-10">The Pokémon Leagues</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Diamond & Pearl",
+                image: "/diamond-pearl.jpg",
+                description:
+                  "Explore Ash's journey in the Sinnoh region, where he faces strong rivals like Paul and competes in epic battles.",
+              },
+              {
+                title: "X/Y Series",
+                image: "/xy-series.jpg",
+                description:
+                  "Follow Ash in the Kalos region as he forms an incredible bond with Greninja and participates in the Kalos League.",
+              },
+              {
+                title: "Sun & Moon",
+                image: "/sun-moon.jpg",
+                description:
+                  "Ash's adventure in the Alola region is full of fun, unique challenges, and new Pokémon companions.",
+              },
+              {
+                title: "Journeys",
+                image: "/journeys.jpg",
+                description:
+                  "Ash travels across regions with Goh, aiming to challenge Leon, the strongest Champion in the Pokémon world.",
+              },
+              {
+                title: "Black & White",
+                image: "/black-white.jpg",
+                description:
+                  "Explore Ash's journey in the Unova region, full of new experiences, companions, and exciting battles.",
+              },
+              {
+                title: "Original Series",
+                image: "/original-series.jpg",
+                description:
+                  "The series that started it all, following Ash's journey through Kanto, Johto, and the Indigo League.",
+              },
+            ].map((league, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="bg-gray-700 rounded-lg shadow-lg overflow-hidden"
+              >
+                <Image
+                  src={league.image}
+                  alt={league.title}
+                  width={500}
+                  height={300}
+                  className="w-full object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-2xl font-semibold mb-2">{league.title}</h3>
+                  <p className="text-sm text-gray-300">{league.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Footer Section */}
+      <footer className="py-6 bg-gray-800 text-center">
+        <p className="text-gray-400">
+          Pokémon is a trademark of Nintendo, Creatures Inc., and Game Freak. All rights
+          reserved.
+        </p>
       </footer>
     </div>
   );

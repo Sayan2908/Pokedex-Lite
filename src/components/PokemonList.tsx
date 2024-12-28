@@ -5,6 +5,7 @@ interface PokemonListProps {
   pokemonData: {
     name: string;
     url: string;
+    types: string[];
   }[];
   onCardClick?: (id: number) => void; // New callback prop
 }
@@ -17,6 +18,7 @@ export default function PokemonList({ pokemonData, onCardClick }: PokemonListPro
           key={pokemon.name}
           name={pokemon.name}
           url={pokemon.url}
+          types={pokemon.types}
           onCardClick={onCardClick}
         />
       ))}
