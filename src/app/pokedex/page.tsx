@@ -6,19 +6,29 @@ import PokemonDetailModal from "@/components/PokemonDetailModal";
 
 export default function PokedexPage() {
 
-
   interface Pokemon {
     name: string;
     url: string;
-    types?: string[];
+    types: string[];
   }
-  const [allPokemon, setAllPokemon] = useState<any[]>([]);
+
+  const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [allTypes, setAllTypes] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedPokemonDetails, setSelectedPokemonDetails] = useState<any>(null);
+  
+  interface PokemonDetails {
+    id: number;
+    name: string;
+    types: { type: { name: string } }[];
+    sprites: { other: { "official-artwork": { front_default: string } } };
+    stats: { stat: { name: string }, base_stat: number }[];
+    abilities: { ability: { name: string } }[];
+  }
+
+  const [selectedPokemonDetails, setSelectedPokemonDetails] = useState<PokemonDetails | null>(null);
 
   const [page, setPage] = useState(1);
   const itemsPerPage = 24;
@@ -31,13 +41,13 @@ export default function PokedexPage() {
         if (!response.ok) throw new Error("Failed to fetch Pokémon data");
         const data = await response.json();
 
-        const detailedDataPromises = data.results.map(async (pokemon: any) => {
+        const detailedDataPromises = data.results.map(async (pokemon: { name: string; url: string }) => {
           const res = await fetch(pokemon.url);
           const details = await res.json();
           return {
             name: pokemon.name,
             url: pokemon.url,
-            types: details.types.map((t: any) => t.type.name),
+            types: details.types.map((t: { type: { name: string } }) => t.type.name),
           };
         });
 
@@ -59,7 +69,7 @@ export default function PokedexPage() {
         const response = await fetch("https://pokeapi.co/api/v2/type");
         if (!response.ok) throw new Error("Failed to fetch Pokémon types");
         const data = await response.json();
-        setAllTypes(data.results.map((type: any) => type.name));
+        setAllTypes(data.results.map((type: { name: string }) => type.name));
       } catch (err) {
         console.error(err);
       }
@@ -148,7 +158,7 @@ export default function PokedexPage() {
         </button>
       </div>
 
-      {showModal && (
+      {showModal && selectedPokemonDetails && (
         <PokemonDetailModal
           pokemon={selectedPokemonDetails}
           onClose={handleCloseModal}

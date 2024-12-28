@@ -6,7 +6,20 @@ import { motion } from "framer-motion";
 
 interface PokemonDetailModalProps {
   loading: boolean;
-  pokemon: any;
+  pokemon?: {
+    name: string;
+    id: number;
+    sprites: {
+      other: {
+        "official-artwork": {
+          front_default: string;
+        };
+      };
+    };
+    types: { type: { name: string } }[];
+    stats: { stat: { name: string }; base_stat: number }[];
+    abilities: { ability: { name: string } }[];
+  };
   onClose: () => void;
 }
 
@@ -28,7 +41,8 @@ export default function PokemonDetailModal({
       leaveTo="opacity-0"
     >
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-        <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+        <div className="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
+          {/* Close Button */}
           <button
             onClick={onClose}
             className="absolute right-2 top-2 text-gray-500 hover:text-gray-700"
@@ -36,21 +50,23 @@ export default function PokemonDetailModal({
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              className="h-6 w-6"
               viewBox="0 0 24 24"
               strokeWidth="2"
               stroke="currentColor"
+              className="h-6 w-6"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
+          {/* Loading State */}
           {loading ? (
             <div className="flex h-48 items-center justify-center">
               <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
             </div>
           ) : pokemon ? (
             <div>
+              {/* Pokémon Name and ID */}
               <motion.h2
                 className="mb-4 text-3xl font-extrabold capitalize text-gray-800"
                 initial={{ opacity: 0 }}
@@ -61,6 +77,7 @@ export default function PokemonDetailModal({
                 <span className="text-lg font-normal text-gray-600">#{pokemon.id}</span>
               </motion.h2>
 
+              {/* Pokémon Image */}
               <div className="flex items-center justify-center">
                 <motion.img
                   src={
@@ -69,21 +86,22 @@ export default function PokemonDetailModal({
                   }
                   alt={pokemon.name}
                   className="h-36 w-36 object-contain"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
                 />
               </div>
 
+              {/* Pokémon Type(s) */}
               <div className="mt-4">
                 <h3 className="font-semibold text-xl text-gray-700">Type(s):</h3>
                 <div className="flex flex-wrap gap-2">
-                  {pokemon.types?.map((t: any) => (
+                  {pokemon.types?.map((t) => (
                     <motion.span
                       key={t.type.name}
                       className="rounded-full bg-blue-100 px-3 py-1 text-blue-800"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       {t.type.name}
@@ -92,10 +110,11 @@ export default function PokemonDetailModal({
                 </div>
               </div>
 
+              {/* Pokémon Stats */}
               <div className="mt-4">
-                <h3 className="mb-1 font-semibold text-xl text-black">Stats:</h3>
+                <h3 className="mb-1 font-semibold text-xl text-gray-700">Stats:</h3>
                 <div className="space-y-2">
-                  {pokemon.stats?.map((statObj: any) => (
+                  {pokemon.stats?.map((statObj) => (
                     <motion.div
                       key={statObj.stat.name}
                       initial={{ opacity: 0 }}
@@ -103,8 +122,10 @@ export default function PokemonDetailModal({
                       transition={{ duration: 0.5 }}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="capitalize text-lg font-medium text-black ">{statObj.stat.name}</span>
-                        <span className="font-bold text-black">{statObj.base_stat}</span>
+                        <span className="capitalize text-lg font-medium text-gray-800">
+                          {statObj.stat.name}
+                        </span>
+                        <span className="font-bold text-gray-800">{statObj.base_stat}</span>
                       </div>
                       <div className="relative h-2 w-full rounded bg-gray-200">
                         <motion.div
@@ -122,10 +143,11 @@ export default function PokemonDetailModal({
                 </div>
               </div>
 
+              {/* Pokémon Abilities */}
               <div className="mt-4">
                 <h3 className="mb-1 font-semibold text-xl text-gray-700">Abilities:</h3>
                 <ul className="list-disc pl-4">
-                  {pokemon.abilities?.map((a: any) => (
+                  {pokemon.abilities?.map((a) => (
                     <li
                       key={a.ability.name}
                       className="capitalize text-lg text-gray-800"

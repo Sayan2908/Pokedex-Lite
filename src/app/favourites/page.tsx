@@ -6,7 +6,14 @@ import PokemonList from "@/components/PokemonList";
 
 export default function FavoritesPage() {
   const { favorites } = useFavorites();
-  const [favoritePokemonDetails, setFavoritePokemonDetails] = useState<any[]>([]);
+
+  interface PokemonDetail {
+    id: number;
+    name: string;
+    types: { type: { name: string } }[];
+  }
+
+  const [favoritePokemonDetails, setFavoritePokemonDetails] = useState<PokemonDetail[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Pagination
@@ -75,7 +82,7 @@ export default function FavoritesPage() {
             pokemonData={paginatedFavorites.map((pokemon) => ({
               name: pokemon.name,
               url: `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`,
-              types: pokemon.types.map((t: any) => t.type.name),
+              types: pokemon.types.map((t: { type: { name: string } }) => t.type.name),
             }))}
           />
 
