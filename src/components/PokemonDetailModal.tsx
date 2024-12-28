@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Transition } from "@headlessui/react";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 interface PokemonDetailModalProps {
   loading: boolean;
-  pokemon: any; // Could define a more specific type
+  pokemon: any;
   onClose: () => void;
 }
 
@@ -15,7 +15,6 @@ export default function PokemonDetailModal({
   pokemon,
   onClose,
 }: PokemonDetailModalProps) {
-  // Basic Tailwind modal overlay + content
   return (
     <Transition
       appear
@@ -29,9 +28,7 @@ export default function PokemonDetailModal({
       leaveTo="opacity-0"
     >
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-        {/* Modal Container */}
         <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-          {/* Close button */}
           <button
             onClick={onClose}
             className="absolute right-2 top-2 text-gray-500 hover:text-gray-700"
@@ -49,12 +46,10 @@ export default function PokemonDetailModal({
           </button>
 
           {loading ? (
-            // Loading Spinner
             <div className="flex h-48 items-center justify-center">
               <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
             </div>
           ) : pokemon ? (
-            // Pokémon Info
             <div>
               <motion.h2
                 className="mb-4 text-3xl font-extrabold capitalize text-gray-800"
@@ -66,7 +61,6 @@ export default function PokemonDetailModal({
                 <span className="text-lg font-normal text-gray-600">#{pokemon.id}</span>
               </motion.h2>
 
-              {/* Official Artwork */}
               <div className="flex items-center justify-center">
                 <motion.img
                   src={
@@ -81,7 +75,6 @@ export default function PokemonDetailModal({
                 />
               </div>
 
-              {/* Types */}
               <div className="mt-4">
                 <h3 className="font-semibold text-xl text-gray-700">Type(s):</h3>
                 <div className="flex flex-wrap gap-2">
@@ -99,7 +92,6 @@ export default function PokemonDetailModal({
                 </div>
               </div>
 
-              {/* Stats */}
               <div className="mt-4">
                 <h3 className="mb-1 font-semibold text-xl text-black">Stats:</h3>
                 <div className="space-y-2">
@@ -130,7 +122,6 @@ export default function PokemonDetailModal({
                 </div>
               </div>
 
-              {/* Abilities */}
               <div className="mt-4">
                 <h3 className="mb-1 font-semibold text-xl text-gray-700">Abilities:</h3>
                 <ul className="list-disc pl-4">
@@ -146,7 +137,6 @@ export default function PokemonDetailModal({
               </div>
             </div>
           ) : (
-            // In case no data is available after loading
             <div className="p-4 text-center text-gray-500">
               Pokémon data not found.
             </div>

@@ -15,18 +15,16 @@ interface PokemonListProps {
 }
 
 export default function PokemonList({ pokemonData, onCardClick, loading }: PokemonListProps) {
-  // Parent container animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Controls the delay between children animations
+        staggerChildren: 0.1,
       },
     },
   };
 
-  // Child item animation variants
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -41,7 +39,6 @@ export default function PokemonList({ pokemonData, onCardClick, loading }: Pokem
         </div>
       )}
 
-      {/* Pokémon Cards */}
       {!loading && (
         <motion.div
           variants={containerVariants}
@@ -52,7 +49,7 @@ export default function PokemonList({ pokemonData, onCardClick, loading }: Pokem
           {pokemonData.map((pokemon) => (
             <motion.div
               key={pokemon.name}
-              variants={itemVariants} // Apply child animation variants
+              variants={itemVariants}
             >
               <PokemonCard
                 name={pokemon.name}

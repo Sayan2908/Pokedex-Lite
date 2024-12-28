@@ -14,7 +14,6 @@ export default function FavoritesPage() {
   const itemsPerPage = 24;
 
   useEffect(() => {
-    // Fetch detailed data for all favorite Pokémon
     const fetchFavorites = async () => {
       if (!favorites.length) {
         setFavoritePokemonDetails([]);
@@ -41,7 +40,6 @@ export default function FavoritesPage() {
     fetchFavorites();
   }, [favorites]);
 
-  // Paginate the list
   const totalPages = Math.ceil(favoritePokemonDetails.length / itemsPerPage);
 
   const paginatedFavorites = favoritePokemonDetails.slice(
@@ -77,11 +75,10 @@ export default function FavoritesPage() {
             pokemonData={paginatedFavorites.map((pokemon) => ({
               name: pokemon.name,
               url: `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`,
-              types: pokemon.types.map((t: any) => t.type.name), // Pass types to PokemonCard
+              types: pokemon.types.map((t: any) => t.type.name),
             }))}
           />
 
-          {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="mt-6 flex items-center space-x-4">
               <button

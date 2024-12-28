@@ -5,7 +5,7 @@ interface PokemonCardProps {
   name: string;
   url: string;
   types: string[];
-  onCardClick?: (id: number) => void; // Callback for when user clicks the card
+  onCardClick?: (id: number) => void;
 }
 
 const typeColors: { [key: string]: string } = {
@@ -30,20 +30,17 @@ const typeColors: { [key: string]: string } = {
 };
 
 export default function PokemonCard({ name, url, types, onCardClick }: PokemonCardProps) {
-  // Extract Pokémon ID
   const getPokemonId = (url: string) => {
     const segments = url.split("/").filter(Boolean);
     return parseInt(segments[segments.length - 1]);
   };
   const pokemonId = getPokemonId(url);
 
-  // Favorites logic
   const { favorites, toggleFavorite } = useFavorites();
   const isFavorite = favorites.includes(pokemonId);
 
   const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
 
-  // Click handler for opening details (modal)
   const handleCardClick = () => {
     if (onCardClick) {
       onCardClick(pokemonId);
@@ -55,7 +52,6 @@ export default function PokemonCard({ name, url, types, onCardClick }: PokemonCa
       onClick={handleCardClick}
       className="relative flex cursor-pointer flex-col items-center justify-center rounded-lg bg-gradient-to-b from-indigo-100 to-white p-4 shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-lg"
     >
-      {/* Pokémon Image */}
       <div className="relative mb-2 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-white shadow-inner">
         <img
           src={imageUrl}
@@ -65,7 +61,6 @@ export default function PokemonCard({ name, url, types, onCardClick }: PokemonCa
         />
       </div>
 
-      {/* Type Badges */}
       <div className="mt-2 flex flex-wrap justify-center gap-2">
         {types.map((type) => (
           <span
@@ -77,19 +72,16 @@ export default function PokemonCard({ name, url, types, onCardClick }: PokemonCa
         ))}
       </div>;
 
-      {/* Pokémon Name */}
       <p className="mt-2 text-lg font-semibold capitalize text-gray-800">
         {name}
       </p>
 
-      {/* Pokémon ID */}
       <p className="text-sm font-medium text-gray-500">#{pokemonId}</p>
 
-      {/* Favorite Icon */}
       <button
         type="button"
         onClick={(e) => {
-          e.stopPropagation(); // Prevent card click
+          e.stopPropagation();
           toggleFavorite(pokemonId);
         }}
         className="absolute right-2 top-2 z-10 p-1"

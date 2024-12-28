@@ -10,7 +10,6 @@ export default function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Later: implement real authentication logic
     alert(`Logging in with: ${formData.username} / ${formData.password}`);
   };
 
@@ -24,7 +23,6 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Username */}
       <div>
         <label
           htmlFor="username"
@@ -43,7 +41,6 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Password */}
       <div>
         <label
           htmlFor="password"
@@ -62,7 +59,6 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Submit Button */}
       <div>
         <button
           type="submit"

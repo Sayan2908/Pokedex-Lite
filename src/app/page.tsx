@@ -6,15 +6,13 @@ import Image from "next/image";
 export default function Home() {
   const { scrollY } = useScroll();
 
-  // Create parallax effects
   const ashParallax = useTransform(scrollY, [0, 500], [0, 100]);
   const leagueParallax = useTransform(scrollY, [200, 800], [0, 200]);
 
   return (
     <div className="min-h-screen overflow-hidden bg-gray-900 text-white">
-      {/* Header Section */}
+
       <section className="relative h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-gray-800 to-gray-900">
-        {/* Background Image with Blur and Overlay */}
         <motion.div
           style={{ y: ashParallax }}
           className="absolute top-0 left-0 w-full h-full z-0"
@@ -27,10 +25,9 @@ export default function Home() {
             className="filter blur-sm brightness-75 contrast-110 saturate-150"
             priority
           />
-          <div className="absolute inset-0 bg-black/40"></div> {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/40"></div>
         </motion.div>
 
-        {/* Text Content */}
         <div className="relative z-0 px-4">
           <h1 className="text-5xl font-bold mb-4 sm:text-6xl text-white drop-shadow-md">
             Welcome to the Pokémon World
@@ -42,7 +39,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* History Section */}
       <section className="relative px-8 py-20 bg-gray-800">
 
         <motion.div
@@ -58,15 +54,13 @@ export default function Home() {
           <p className="text-lg leading-relaxed text-white drop-shadow-md">
             Pokémon started as a video game series in 1996 and quickly grew into a global
             phenomenon, spanning anime, movies, trading cards, and more. Follow Ash
-            Ketchum's dream to become a Pokémon Master as he travels through various
+            Ketchum&apos;s dream to become a Pokémon Master as he travels through various
             regions, participating in leagues and making friends along the way.
           </p>
         </motion.div>
       </section>
 
-      {/* Leagues Section */}
       <section className="relative py-20">
-        {/* Background Image with Overlay */}
         <motion.div
           style={{ y: leagueParallax }}
           className="absolute inset-0 z-0"
@@ -79,7 +73,7 @@ export default function Home() {
             className="filter blur-sm brightness-75 contrast-110 saturate-150"
             priority
           />
-          <div className="absolute inset-0 bg-black/40"></div> {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/40"></div>
         </motion.div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-8">

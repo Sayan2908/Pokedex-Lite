@@ -32,12 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Wrap everything inside FavoritesProvider */}
         <FavoritesProvider>
-          {/* Dark Themed Header */}
           <header className="bg-gray-800 shadow-lg rounded-b-lg">
             <div className="mx-auto flex max-w-7xl items-center justify-between p-2 sm:p-3 md:p-4">
-              {/* Smaller Responsive Logo */}
               <Link href="/">
                 <div className="w-16 sm:w-16 md:w-20 lg:w-24 xl:w-32">
                   <Image
@@ -51,7 +48,6 @@ export default function RootLayout({
                 </div>
               </Link>
 
-              {/* Navigation */}
               <nav className="flex space-x-2 sm:space-x-4">
                 <NavLink href="/pokedex">Pokedex</NavLink>
                 <NavLink href="/favourites">Favourites</NavLink>
@@ -60,7 +56,6 @@ export default function RootLayout({
             </div>
           </header>
 
-          {/* Main Content */}
           <main>{children}</main>
         </FavoritesProvider>
       </body>
@@ -68,7 +63,6 @@ export default function RootLayout({
   );
 }
 
-// Reusable NavLink component
 function NavLink({
   href,
   children,

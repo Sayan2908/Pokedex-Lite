@@ -5,6 +5,13 @@ import PokemonList from "@/components/PokemonList";
 import PokemonDetailModal from "@/components/PokemonDetailModal";
 
 export default function PokedexPage() {
+
+
+  interface Pokemon {
+    name: string;
+    url: string;
+    types?: string[];
+  }
   const [allPokemon, setAllPokemon] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,14 +31,13 @@ export default function PokedexPage() {
         if (!response.ok) throw new Error("Failed to fetch Pokémon data");
         const data = await response.json();
 
-        // Fetch detailed Pokémon data for types
         const detailedDataPromises = data.results.map(async (pokemon: any) => {
           const res = await fetch(pokemon.url);
           const details = await res.json();
           return {
             name: pokemon.name,
             url: pokemon.url,
-            types: details.types.map((t: any) => t.type.name), // Extract types
+            types: details.types.map((t: any) => t.type.name),
           };
         });
 
@@ -47,7 +53,6 @@ export default function PokedexPage() {
     fetchData();
   }, []);
 
-  // Fetch Pokémon types for the dropdown
   useEffect(() => {
     const fetchTypes = async () => {
       try {
@@ -67,7 +72,6 @@ export default function PokedexPage() {
     const matchesSearch = pokemon.name.includes(searchTerm.toLowerCase());
     if (!selectedType) return matchesSearch;
 
-    // Check if the selected type matches the Pokémon's types
     const matchesType = pokemon.types.includes(selectedType.toLowerCase());
     return matchesSearch && matchesType;
   });
@@ -97,9 +101,7 @@ export default function PokedexPage() {
     <div className="mx-auto w-full max-w-7xl p-4">
       <h1 className="my-6 text-4xl font-bold text-white">Pokédex</h1>
 
-      {/* Search and Filter */}
       <div className="mb-6 flex w-full max-w-xl flex-col gap-4 sm:flex-row">
-        {/* Search Bar */}
         <input
           type="text"
           placeholder="Search Pokémon..."
@@ -108,7 +110,6 @@ export default function PokedexPage() {
           className="w-full text-black rounded-full border border-gray-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105"
         />
 
-        {/* Dropdown for Pokémon Types */}
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
@@ -123,14 +124,12 @@ export default function PokedexPage() {
         </select>
       </div>
 
-      {/* Pokémon List */}
       <PokemonList
         pokemonData={paginatedPokemon}
         onCardClick={handleOpenModal}
         loading={loading}
       />
 
-      {/* Pagination */}
       <div className="mt-6 flex justify-center space-x-4 items-center">
         <button
           onClick={handlePrevPage}
@@ -149,7 +148,6 @@ export default function PokedexPage() {
         </button>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <PokemonDetailModal
           pokemon={selectedPokemonDetails}
