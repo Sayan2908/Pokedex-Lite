@@ -1,6 +1,6 @@
 ## Getting Started
 
-## [Link to Project](https://pokedex-lite-654c-iu0w7d0ou-sayan2908s-projects.vercel.app/)
+## [Link to Project](https://pokedex-lite-654c.vercel.app/)
 
 First install the necessary requirements:
 ```bash
