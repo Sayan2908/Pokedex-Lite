@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Transition } from "@headlessui/react";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 interface PokemonDetailModalProps {
   loading: boolean;
@@ -29,7 +30,7 @@ export default function PokemonDetailModal({
     >
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
         {/* Modal Container */}
-        <div className="relative w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
+        <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
           {/* Close button */}
           <button
             onClick={onClose}
@@ -55,66 +56,89 @@ export default function PokemonDetailModal({
           ) : pokemon ? (
             // Pokémon Info
             <div>
-              <h2 className="mb-4 text-2xl font-bold capitalize">
-                {pokemon.name} <span className="text-lg font-normal">#{pokemon.id}</span>
-              </h2>
+              <motion.h2
+                className="mb-4 text-3xl font-extrabold capitalize text-gray-800"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                {pokemon.name}{" "}
+                <span className="text-lg font-normal text-gray-600">#{pokemon.id}</span>
+              </motion.h2>
 
               {/* Official Artwork */}
               <div className="flex items-center justify-center">
-                <img
+                <motion.img
                   src={
                     pokemon.sprites?.other?.["official-artwork"]?.front_default ||
                     "/placeholder.png"
                   }
                   alt={pokemon.name}
                   className="h-36 w-36 object-contain"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
                 />
               </div>
 
               {/* Types */}
               <div className="mt-4">
-                <h3 className="font-semibold">Type(s):</h3>
+                <h3 className="font-semibold text-xl text-gray-700">Type(s):</h3>
                 <div className="flex flex-wrap gap-2">
                   {pokemon.types?.map((t: any) => (
-                    <span
+                    <motion.span
                       key={t.type.name}
                       className="rounded-full bg-blue-100 px-3 py-1 text-blue-800"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
                     >
                       {t.type.name}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
 
               {/* Stats */}
               <div className="mt-4">
-                <h3 className="mb-1 font-semibold">Stats:</h3>
+                <h3 className="mb-1 font-semibold text-xl text-gray-700">Stats:</h3>
                 <div className="space-y-2">
                   {pokemon.stats?.map((statObj: any) => (
-                    <div key={statObj.stat.name}>
+                    <motion.div
+                      key={statObj.stat.name}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                    >
                       <div className="flex items-center justify-between">
-                        <span className="capitalize">{statObj.stat.name}</span>
-                        <span className="font-medium">{statObj.base_stat}</span>
+                        <span className="capitalize text-lg font-medium">{statObj.stat.name}</span>
+                        <span className="font-bold text-gray-800">{statObj.base_stat}</span>
                       </div>
                       <div className="relative h-2 w-full rounded bg-gray-200">
-                        <div
+                        <motion.div
                           className="absolute left-0 top-0 h-2 rounded bg-blue-500"
                           style={{
                             width: `${(statObj.base_stat / 200) * 100}%`,
                           }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(statObj.base_stat / 200) * 100}%` }}
+                          transition={{ duration: 1 }}
                         />
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Abilities */}
               <div className="mt-4">
-                <h3 className="mb-1 font-semibold">Abilities:</h3>
+                <h3 className="mb-1 font-semibold text-xl text-gray-700">Abilities:</h3>
                 <ul className="list-disc pl-4">
                   {pokemon.abilities?.map((a: any) => (
-                    <li key={a.ability.name} className="capitalize">
+                    <li
+                      key={a.ability.name}
+                      className="capitalize text-lg text-gray-800"
+                    >
                       {a.ability.name}
                     </li>
                   ))}
