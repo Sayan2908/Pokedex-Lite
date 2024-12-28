@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// 1) Import the FavoritesProvider
+import FavoritesProvider from "@/context/FavoritesContext";
+import Link from "next/link";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +31,32 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* 2) Wrap everything inside FavoritesProvider so the context is available everywhere */}
+        <FavoritesProvider>
+          {/* Simple Header */}
+          <header className="flex items-center justify-between bg-white p-4 shadow">
+            <Link href="/">
+              <span className="text-xl font-bold">Pokedex Lite</span>
+            </Link>
+            <nav className="space-x-4">
+              <Link href="/pokedex" className="text-blue-600 hover:underline">
+                Pokedex
+              </Link>
+              <Link href="/favourites" className="text-blue-600 hover:underline">
+                Favourites
+              </Link>
+              {/* If you want a link to the login page, uncomment below: */}
+              {/* 
+                <Link href="/login" className="text-blue-600 hover:underline">
+                  Login
+                </Link>
+              */}
+            </nav>
+          </header>
+
+          {/* Main Content */}
+          <main>{children}</main>
+        </FavoritesProvider>
       </body>
     </html>
   );
