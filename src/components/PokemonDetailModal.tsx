@@ -101,7 +101,7 @@ export default function PokemonDetailModal({
 
               {/* Stats */}
               <div className="mt-4">
-                <h3 className="mb-1 font-semibold text-xl text-gray-700">Stats:</h3>
+                <h3 className="mb-1 font-semibold text-xl text-black">Stats:</h3>
                 <div className="space-y-2">
                   {pokemon.stats?.map((statObj: any) => (
                     <motion.div
@@ -111,8 +111,8 @@ export default function PokemonDetailModal({
                       transition={{ duration: 0.5 }}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="capitalize text-lg font-medium">{statObj.stat.name}</span>
-                        <span className="font-bold text-gray-800">{statObj.base_stat}</span>
+                        <span className="capitalize text-lg font-medium text-black ">{statObj.stat.name}</span>
+                        <span className="font-bold text-black">{statObj.base_stat}</span>
                       </div>
                       <div className="relative h-2 w-full rounded bg-gray-200">
                         <motion.div

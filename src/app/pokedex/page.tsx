@@ -95,7 +95,7 @@ export default function PokedexPage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl p-4">
-      <h1 className="my-6 text-4xl font-bold text-gray-800">Pokédex</h1>
+      <h1 className="my-6 text-4xl font-bold text-white">Pokédex</h1>
 
       {/* Search and Filter */}
       <div className="mb-6 flex w-full max-w-xl flex-col gap-4 sm:flex-row">
@@ -105,14 +105,14 @@ export default function PokedexPage() {
           placeholder="Search Pokémon..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-full border border-gray-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105"
+          className="w-full text-black rounded-full border border-gray-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105"
         />
 
         {/* Dropdown for Pokémon Types */}
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          className="w-full rounded-full border border-gray-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105"
+          className="w-full text-black rounded-full border border-gray-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-transform duration-300 ease-in-out hover:scale-105"
         >
           <option value="">All Types</option>
           {allTypes.map((type) => (
@@ -131,7 +131,7 @@ export default function PokedexPage() {
       />
 
       {/* Pagination */}
-      <div className="mt-6 flex justify-center space-x-4">
+      <div className="mt-6 flex justify-center space-x-4 items-center">
         <button
           onClick={handlePrevPage}
           disabled={page === 1}
