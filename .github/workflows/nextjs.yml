@@ -1,6 +1,9 @@
 name: Pull Request Demo and Validation
 
 on:
+  push: # Trigger on pushes
+    branches:
+      - main
   pull_request:
     branches:
       - main # Run checks on pull requests to the main branch
