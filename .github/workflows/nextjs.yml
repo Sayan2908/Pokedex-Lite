@@ -1,0 +1,87 @@
+name: Pull Request Demo and Validation
+
+on:
+  pull_request:
+    branches:
+      - main # Run checks on pull requests to the main branch
+
+jobs:
+  validate:
+    name: Validate PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Adjust based on your project
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint the code
+        run: pnpm run lint
+
+      - name: TypeScript type checks
+        run: pnpm run type-check
+
+      - name: Build the project
+        run: pnpm run build
+
+      - name: Notify validation success
+        if: ${{ success() }}
+        run: echo "Validation passed!"
+
+  deploy:
+    name: Deploy Demo to GitHub Pages
+    needs: validate # Run only if 'validate' job succeeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build for deployment
+        run: pnpm run build
+
+      - name: Export static files
+        run: pnpm run export # Ensure you have an export command in package.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: "./out" # Adjust if your exported static files go elsewhere
+
+  notify:
+    name: Notify Deployment Status
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deployment Status
+        run: |
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "Validation and Deployment succeeded! Ready to merge."
+          else
+            echo "Deployment failed. Check logs for details."
+          fi
